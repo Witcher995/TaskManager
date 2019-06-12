@@ -1,0 +1,13 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    background-color: aquamarine;
+    padding: 10px;
+    margin: 0 auto;
+}
+.elo{
+    padding: 5px;
+    margin: 0 0 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+}

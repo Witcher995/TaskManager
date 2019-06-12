@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Registration</title>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+        <script type="text/javascript" th:src="@{/js/required.js}"></script>
+    </head>
+    <body>
+
+        <form th:action="@{/logout}" method="post">
+            <nav th:replace="fragments :: navigation"></nav>
+        </form>
+
+        <form class = "form-group" name="employeeForm" th:action="@{/admin/registration}" method="post">
+            
+
+            <div class="container">
+                <div class="row">           
+                    <div class="col-lg-6">
+                        <div id="ui">
+
+                            <div class="row">
+                                <h2>Dodaj pracownika</h2>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label> Nazwa Użytkownika </label>
+                                    <input type="text" name="username" class="form-control" placeholder="Nazwa użytkownika"/>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label> Hasło </label>
+                                    <input type="password" name="password" class="form-control" placeholder="Hasło"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label> Imię </label>
+                                    <input type="text" name="firstName" class="form-control" placeholder="Imię"/>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label> Nazwisko </label>
+                                    <input type="text" name="lastName" class="form-control" placeholder="Nazwisko"/>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label> Email </label>
+                                    <input type="email" name="email" class="form-control" placeholder="Hasło"/>
+                                </div>
+                            </div>
+
+                            <div class = "row">
+                                <div class="col-lg-6">
+                                    <label>Przydziel rolę</label>
+                                    <select class="form-control" name="roleId">
+
+                                        <option th:each="role : ${roles}" 
+                                                th:value="${role.id}"
+                                                th:text="${role.name}"/>
+
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label>Przydziel dział</label>
+                                    <select class="form-control" name="branchId">
+
+                                        <option th:each="branch : ${branches}" 
+                                                th:value="${branch.id}" 
+                                                th:text="${branch.nameBranch}"/>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class = "row">
+                                <div class="col-lg-8">
+                                    <input type="submit" class="btn btn-success btn-block" value="Dodaj użytkownika" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+            </div>
+
+        </form>    
+    </body>
+</html>

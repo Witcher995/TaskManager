@@ -1,0 +1,138 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--<script type="text/javascript" th:href="@{/js/filter.js}"/>-->
+        <script type="text/javascript">
+
+            function myFunction() {
+                //<![CDATA[
+                var input, filter, table, tr, td, txtValue, optionIndex;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myEmployees");
+                tr = table.getElementsByTagName("tr");
+                optionIndex = document.getElementById("selectObject");
+
+                for (var i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[optionIndex.selectedIndex];
+                    if (td) {
+                        txtValue = td.textContent;
+                        if (txtValue.toUpperCase().indexOf(filter) >= 0) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+                //]]>
+            }
+
+            function sortTable() {
+                //<![CDATA[
+                var table, rows, switching, i, x, y, shouldSwitch;
+                table = document.getElementById("myEmployees");
+                switching = true;
+                /* Make a loop that will continue until
+                 no switching has been done: */
+                while (switching) {
+                    // Start by saying: no switching is done:
+                    switching = false;
+                    rows = table.rows;
+                    /* Loop through all table rows (except the
+                     first, which contains table headers): */
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        // Start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /* Get the two elements you want to compare,
+                         one from current row and one from the next: */
+                        x = rows[i].getElementsByTagName("TD")[1];
+                        y = rows[i + 1].getElementsByTagName("TD")[1];
+                        // Check if the two rows should switch place:
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /* If a switch has been marked, make the switch
+                         and mark that a switch has been done: */
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                    }
+                }
+                //]]>
+            }
+
+        </script>
+    </head>
+    <body>
+
+        <form th:action="@{/logout}" method="post">
+            <nav th:replace="fragments :: navigation"></nav>
+        </form>
+
+        <div class="container">
+            <p><button onclick="sortTable()">Sortuj</button></p>
+            <div class ="row">
+                <table>
+                    <tr>
+                        <td>Szukaj w bazie po: </td>
+                        <td>
+                            <select class="form-control" id="selectObject">
+                                <option id="0">Id</option>
+                                <option id="1">Nazwa Użytkownika</option>
+                                <option id="2">Imię</option>
+                                <option id="3">Nazwisko</option>
+                                <option id="4">Email</option>
+                                <option id="5">Dział</option>
+                                <option id="6">Prawa</option>  
+                            </select>
+                        </td>
+                        <td>Fraza: </td>
+                        <td>
+                            <input type="text" class="form-control" id="myInput" 
+                                   onkeyup="myFunction()" placeholder="Search for names.."/>
+                        </td>       
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover table" id="myEmployees">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Nazwa Branży</th>
+                                    <th scope="col">Akcja</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="b : ${branches}">
+                                    <td th:text="${b.id}"></td>
+                                    <td th:text="${b.nameBranch}"></td>
+                                    <td>
+                                        <a th:attr="href=@{/admin/branches/delete/{id} (id=${b.id})}" class="btn btn-danger">Usuń</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

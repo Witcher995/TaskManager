@@ -1,0 +1,77 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Insert title here</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}"/>
+
+    </head>
+    <body>
+        <form th:action="@{/logout}" method="post">
+            <nav th:replace="fragments :: navigation"></nav>
+        </form>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-block">
+                            <div class="user-img">
+                                <img th:src="@{/img/user.png}" alt="" class="img-fluid"/>
+                            </div>
+                            <div class="card-title">
+                                <h4>Zarządzaj pracownikami</h4>
+                            </div>
+                            <div class="card-text">
+                                <a th:attr="href=@{/admin/employees}" class="btn btn-success">Pracownicy</a>
+                                <a th:attr="href=@{/admin/registration}" class="btn btn-success">Dodaj Pracownika</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-block">
+                            <div class="user-img">
+                                <img th:src="@{/img/workers.png}" alt="" class="img-fluid"/>
+                            </div>
+                            <div class="card-title">
+                                <h4>Zarządzaj Działami</h4>
+                            </div>
+                            <div class="card-text">
+                                <a th:attr="href=@{admin/branches}" class="btn btn-success">Działy</a>
+                                <a th:attr="href=@{/admin/addBranch}" class="btn btn-success">Dodaj Dział</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-block">
+                            <div class="user-img">
+                                <img th:src="@{/img/tasks.png}" alt="" class="img-fluid"/>
+                            </div>
+                            <div class="card-title">
+                                <h4>Zarządzaj Zadaniami</h4>
+                            </div>
+                            <div class="card-text">
+                                <a th:attr="href=@{/tasks}" class="btn btn-success">Zadania</a>
+                                <a th:attr="href=@{/admin/toAccept}" class="btn btn-success">Zadania do akceptacji</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

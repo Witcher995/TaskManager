@@ -1,0 +1,191 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/taskDetails.css}"/>
+        <script type="text/javascript" th:src="@{/js/filter.js}"></script>
+
+    </head>
+    <body>
+
+        <form th:action="@{/logout}" method="post">
+            <nav th:replace="fragments :: navigation"></nav>
+        </form>
+
+        <div class="container-fluid">
+            <form class = "form-group" th:object="${task}" th:action="@{/tasks/details/{id}/editTask (id=${task.id})}" th:method="patch">
+                <div class="row">
+                    <div class="col-lg-1">
+                        <label th:text="Tytuł"/>
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control fr" th:field="*{title}" th:value="${task.title}" th:disabled="true"/>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <input th:id="clickMe" class="btn btn-info" th:value="Edytuj"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-1">
+                        <label th:text="Opis"/>
+                    </div>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control fr" th:field="*{description}" th:value="${task.description}" th:disabled="true"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-1">
+                        <label th:text="Priotytet"/>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control fr" th:field="*{priority}" th:value="${task.priority}" th:disabled="true"/>
+                    </div>
+
+                    <div class="col-lg-1">
+                        <label th:text="Status"/>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control fr" th:field="*{status}" th:value="${task.status}" th:disabled="true"/>
+                    </div>
+                </div>
+
+                <div class="row col-lg-6">
+                    <table class="table table-hover table">
+                        <thead>
+                            <tr>
+                                <th>Przypisani pracownicy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="es, iter : ${task.employees}">
+                                <td th:text="${es.firstName} + ' ' + ${es.lastName} + ' ' + ${iter.index}"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label> Zmień pracowników </label>
+                    </div>
+                    <div class="col-lg-6">
+                        <select th:field="*{employees}" required = "required" multiple="multiple">
+
+                            <option th:each="empl, iter : ${emp}" th:value="${empl.id}" th:text="${empl.firstName} + ' ' + ${empl.lastName}" th:selected="true">Imię</option>
+
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button th:id="accept" class="btn btn-success" type="submit" th:disabled="true"> Zapisz zmiany </button>
+                    </div>
+                </div>
+            </form>
+
+
+            <div class="row">
+                <form class = "form-group" name="checkListForm" th:action="@{/tasks/details/{id}/addCheckList (id=${task.id})}" method="post">
+                    <div class="col-sm-4" id="checkList">
+                        <input type="text" class="form-control" name="title" id="inputCheckList" placeholder="Dodaj zadanie do checklisty"/>
+                    </div>
+                    <div class="col-sm-4">
+
+                        <button class="btn btn-default" type="submit">Dodaj do listy</button>
+
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="row" >
+                <form class = "form-group" name="checkListId" th:action="@{/tasks/details/{id}/editCheckList (id=${task.id})}" method="post">
+                    <div class="col-sm-4">
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th> Zadania do wykonania </th>
+                                </tr>
+                            </thead>
+
+                            <tbody >
+                                <tr th:each="chList, iter : ${checkList}">
+                                    <td th:if="!${chList.isChecked}">      
+                                        <input type="checkbox" name="checkListId" th:value="${chList.id}" 
+                                                />
+                                        <label th:text="${chList.title}"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-4">
+                        <table class="table table-dark">
+
+                            <thead>
+                                <tr>
+                                    <th> Zadania wykonane </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr th:each="chList, iter : ${checkList}">
+                                    <td th:if="${chList.isChecked}">      
+                                        <input type="checkbox" name="checkListId" th:value="${chList.id}" 
+                                               />
+                                        <label th:text="${chList.title}"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-primary" type="submit" th:text="Przenieś"></button>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <table class ="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Komentarze</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="comment : ${comments}">
+                                <td>
+                                    <label th:each="commentedBy : ${comment.employee}" th:text="${commentedBy.firstName} +' '+ ${commentedBy.lastName}">.</label>
+                                    <p th:text="${comment.description}"/>
+                                    <span class="date sub-text" th:text="${comment.dateOfComment}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <form class = "form-group" name="commentForm" th:action="@{/tasks/details/{id}/addComment (id=${task.id})}" method="post">
+                        <div class="form-group">
+                            <textarea class="form-control" name="description" id="description" rows="4" placeholder="Dodaj komentarz"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Dodaj</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

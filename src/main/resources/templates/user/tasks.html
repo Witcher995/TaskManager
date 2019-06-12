@@ -1,0 +1,110 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/css/tasks.css}"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <script type="text/javascript" th:src="@{/js/jquerajax.js}"></script>
+
+
+    </head>
+    <body>
+
+        <form th:action="@{/logout}" method="post">
+            <nav th:replace="fragments :: navigation"></nav>
+        </form>
+
+
+        <table class="col-sm-9">
+            <tr>
+                <td>Szukaj w bazie </td>
+                <td>
+                    <input type="text" class="form-control" id="myInput" 
+                           onkeyup="myFunction()" placeholder="Szukaj."/>
+                </td>     
+                <td>
+                    <a th:attr="href=@{/tasks/addTask}" class="btn btn-info">Dodaj</a>
+                </td>
+            </tr>
+        </table>
+
+
+        <div id="bt">
+            <p><button class="btn btn-secondary" id="sort">Sortuj</button></p>
+            <p><button class="btn btn-secondary" id="sort1">Sortuj</button></p>
+            <p><button class="btn btn-secondary" id="sort2">Sortuj</button></p>
+        </div>
+        <div id="board">
+            <div>
+                <h3>Do Zrobienia</h3><h3>W trakcie</h3><h3>Zrobione</h3>
+            </div>
+
+            <ul id="todo" class="connectedSortable">
+
+                <li class="elo" th:each="task : ${tasks}"
+                    draggable="true" 
+                    th:id="${task.id}" 
+                    th:if="${task.status} == 'todo'"
+                    th:style="${task.priority} == 'Wysoki' ? 'background : orangered;' : 
+                    (${task.priority} == 'Średni' ? 'background : orange;' : 'background : greenyellow;') ">
+                    <h3 th:text="'Tytuł: ' + ${task.title}">.</h3>
+                    <p th:text="'Opis: '+ ${task.description}">.</p>
+                    <p>Przypisani pracownicy: </p>
+                    <p  class="essa"
+                        th:each="employee : ${task.employees}" 
+                        th:text="${employee.lastName}"></p>
+                    <p>
+                        <a th:attr="href=@{/tasks/details/{id} (id=${task.id})}" class="btn btn-info">Szczegóły</a>
+                    </p>
+                </li>
+            </ul>
+
+            <ul id="inprogress" class="connectedSortable">
+                <li class="elo" th:each="task : ${tasks}"
+                    draggable="true" 
+                    th:id="${task.id}" 
+                    th:if="${task.status} == 'inprogress'"
+                    th:style="${task.priority} == 'Wysoki' ? 'background : orangered;' : 
+                    (${task.priority} == 'Średni' ? 'background : orange;' : 'background : greenyellow;') ">
+
+                    <h3 th:text="'Tytuł: ' + ${task.title}">.</h3>
+                    <p th:text="'Opis: '+ ${task.description}">.</p>
+                    <p  class="essa"
+                        th:each="employee : ${task.employees}" 
+                        th:text="${employee.lastName}"></p>
+                    <p>
+                        <a th:attr="href=@{/tasks/details/{id} (id=${task.id})}" class="btn btn-info">Szczegóły</a>
+                    </p>
+                </li>
+            </ul>
+
+            <ul id="done" class="connectedSortable">
+                <li class="elo" th:each="task : ${tasks}"
+                    draggable="true" 
+                    th:id="${task.id}" 
+                    th:if="${task.status} == 'done'" 
+                    th:style="${task.priority} == 'Wysoki' ? 'background : orangered;' : 
+                    (${task.priority} == 'Średni' ? 'background : orange;' : 'background : greenyellow;') ">
+                    <h3 th:text="'Tytuł: ' + ${task.title}">.</h3>
+                    <p th:text="'Opis: '+ ${task.description}">.</p>
+                    <p  class="essa"
+                        th:each="employee : ${task.employees}" 
+                        th:text="${employee.lastName}"></p>
+                    <p>
+                    <a th:attr="href=@{/tasks/details/{id} (id=${task.id})}" class="btn btn-info">Szczegóły</a>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
