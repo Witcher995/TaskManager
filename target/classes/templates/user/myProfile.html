@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+
+        <script>
+            $(document).ready(function () {
+
+                $(document).ready(function () {
+                    $("#clickMe").click(function () {
+                        if ($('#fr').prop("disabled")) {
+                            $('#fr').prop("disabled", false);
+                            $('#accept').prop("disabled", false);
+                        } else {
+                            $('#fr').prop("disabled", true);
+                            $('#accept').prop("disabled", true);
+                        }
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+
+        <form th:action="@{/logout}" method="post">
+            <nav th:replace="fragments :: navigation"></nav>
+        </form>
+
+        <form class = "form-group" th:object="${profile}" th:action="@{myProfile/{id} (id=${profile.id})}" th:method="patch">
+
+            <div class="container">
+                <div class="row">           
+                    <div class="col-lg-6">
+                        <div id="ui">
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <input id="clickMe" class="btn btn-info" value="Zmień hasło"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label> Nazwa Użytkownika </label>
+                                    <input type="text" name="username" class="form-control" th:value="${profile.username}" disabled="disabled"/>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label> Hasło </label>
+                                    <input id="fr" type="password" th:field="*{password}" class="form-control" placeholder="Zmień hasło jeśli chcesz" disabled="disabled" required="true"/>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label> Imię </label>
+                                    <input type="text" name="firstName" class="form-control" th:value="${profile.firstName}" disabled="disabled"/>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label> Nazwisko </label>
+                                    <input type="text" name="lastName" class="form-control" th:value="${profile.lastName}" disabled="disabled"/>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label> Email </label>
+                                    <input type="email" name="email" class="form-control" th:value="${profile.email}" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class = "row">
+                                <div class="col-lg-6">
+                                    <label>Twoja rola</label>
+                                    <input th:each="r : ${profile.role}" type="text" name="role" class="form-control" th:value="${r.name}" disabled="disabled"/>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label> Twój dział </label>
+                                    <input th:each="p : ${profile.branch}" type="text" name="branch" class="form-control" th:value="${p.nameBranch}" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class = "row">
+                                <div class="col-lg-8">
+                                    <input id="accept" type="submit" class="btn btn-success btn-block" value="Zatwierdź" disabled="disabled"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+            </div>
+
+        </form>  
+    </body>
+</html>

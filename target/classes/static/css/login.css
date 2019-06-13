@@ -1,0 +1,77 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2018-11-30, 11:22:48
+    Author     : AdamPrzedlacki
+0*/
+
+@import url("https://use.fontawesome.com/releases/v5.5.0/css/all.css");
+
+body {
+    background-image: url(/img/company.jpg);
+    background-size: cover;
+}
+.main-section{
+    margin: auto;
+    margin-top: 130px;
+    
+}
+.modal-content{
+    background-color: grey;
+    opacity: .8 ;
+    padding: 0 18px;
+    border-radius: 10px;
+}
+
+.user-img img{
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+}
+
+.user-img{
+    margin-top: -60px;
+    margin-bottom: 45px;
+}
+
+.form-group input {
+    height: 42px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+    letter-spacing: 2px;
+    padding-left: 54px;
+}
+
+.form-group::before {
+    content: "\f183";
+    font-family: FontAwesome;
+    position: absolute;
+    font-size: 22px;
+    left: 28px;
+    padding-top: 4px;
+    color: grey;
+}
+
+.form-group:last-of-type:before {
+    content: "\f023"
+}
+
+.form-input button{
+    width: 40%;
+    margin: 5px 0 25px;   
+}
+
+.btn-primary{
+    font-size: 19px;
+    border-radius: 5px;
+    padding: 7px 14px;
+    border: 1px solid #daf1ff;
+}
+.btn-primary:hover{
+    border: 1px solid #daf1ff;
+}
+

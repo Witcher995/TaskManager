@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title> Nawigacja </title>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/css/tasks.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    </head>
+    <body>
+        <form th:action="@{/logout}" method="post">
+            <nav th:replace="fragments :: navigation"></nav>
+        </form>
+
+        <div id="board">
+            <div>
+                <h3>Nowe zadania</h3>
+            </div>
+
+            <ul id="todo" class="grid-container col-2">
+                <li class="elo" th:each="task : ${tasks}"
+                    th:id="${task.id}"
+                    th:if="${task.status} == 'todo' "
+                    th:style="${task.priority} == 'Wysoki' ? 'background : orangered;' : 
+                    (${task.priority} == 'Średni' ? 'background : orange;' : 'background : greenyellow;') ">
+                    <h3 th:text="'Tytuł: ' + ${task.title}">.</h3>
+                    <p th:text="'Opis: '+ ${task.description}">.</p>
+                    <p  th:each="employee : ${task.employees}" 
+                        th:text="'Przypisani pracownicy: '+ ${employee.lastName}"></p>
+                    <a th:attr="href=@{/tasks/details/{id} (id=${task.id})}" class="btn btn-info">Szczegóły</a>
+                </li>
+            </ul>
+
+            <div>
+                <h3>Wysoki Priorytet</h3>
+            </div>
+
+            <ul id="todo" class="grid-container">
+
+                <li class="elo" th:each="task : ${tasks}"
+                    th:id="${task.id}"
+                    th:if="${task.status} != 'todo' and ${task.priority} == 'Wysoki'"
+                    th:style="${'background: orangered;'}">
+                    <h3 th:text="'Tytuł: ' + ${task.title}">.</h3>
+                    <p th:text="'Opis: '+ ${task.description}">.</p>
+                    <p  th:each="employee : ${task.employees}" 
+                        th:text="'Przypisani pracownicy: '+ ${employee.lastName}"></p>
+                    <a th:attr="href=@{/tasks/details/{id} (id=${task.id})}" class="btn btn-info">Szczegóły</a>
+                </li>
+            </ul>
+
+            <div>
+                <h3>Średni Priorytet</h3>
+            </div>
+
+            <ul id="todo" class="grid-container">
+                <li class="elo" th:each="task : ${tasks}"
+                    th:id="${task.id}"
+                    th:if="${task.status} != 'todo' and ${task.priority} == 'Średni'"
+                    th:style="${'background: orange;'}">
+                    <h3 th:text="'Tytuł: ' + ${task.title}">.</h3>
+                    <p th:text="'Opis: '+ ${task.description}">.</p>
+                    <p  th:each="employee : ${task.employees}" 
+                        th:text="'Przypisani pracownicy: '+ ${employee.lastName}"></p>
+                    <a th:attr="href=@{/tasks/details/{id} (id=${task.id})}" class="btn btn-info">Szczegóły</a>
+                </li>
+            </ul>
+
+            <div>
+                <h3>Niski Priorytet</h3>
+            </div>
+
+            <ul id="todo" class="grid-container">
+                <li class="elo" th:each="task : ${tasks}"
+                    th:id="${task.id}"
+                    th:if="${task.status} != 'todo' and ${task.priority} == 'Niski'">
+                    <h3 th:text="'Tytuł: ' + ${task.title}">.</h3>
+                    <p th:text="'Opis: '+ ${task.description}">.</p>
+                    <p  th:each="employee : ${task.employees}" 
+                        th:text="'Przypisani pracownicy: '+ ${employee.lastName}"></p>
+                    <a th:attr="href=@{/tasks/details/{id} (id=${task.id})}" class="btn btn-info">Szczegóły</a>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

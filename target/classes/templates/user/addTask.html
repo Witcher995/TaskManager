@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    </head>
+
+    <body>
+
+        <form th:action="@{/logout}" method="post">
+            <nav th:replace="fragments :: navigation"></nav>
+        </form>
+        
+        <form  name="taskForm" th:action="@{/tasks/addTask}" method="post">
+            <div class="container">
+                <div class="row">           
+                    <div class="col-lg-6">
+                        <div id="ui">
+                            
+                            <div class="row">
+                                <h2> Dodaj Zadanie</h2>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <label> Tytuł </label>
+                                    <input type="text" name="title" id="title" class="form-control" placeholder="Tytuł zadania"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <label> Opis </label>
+                                    <textarea class="form-control" name="description" id="description" rows="3" placeholder="opis"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class = "row">
+                                <div class="col-lg-8">
+                                    <label> Priorytet </label>
+                                    <input class="form-check-input" type="radio" name="priority" id="inlineCheckbox1" value="Niski"/>
+                                    <label class="form-check-label" for="inlineCheckbox1">Niski</label>
+
+                                    <input class="form-check-input" type="radio" name="priority" id="inlineCheckbox2" value="Średni"/>
+                                    <label class="form-check-label" for="inlineCheckbox2">Średni</label>
+
+
+                                    <input class="form-check-input" type="radio" name="priority" id="inlineCheckbox3" value="Wysoki"/>
+                                    <label class="form-check-label" for="inlineCheckbox3">Wysoki</label>
+
+                                </div>
+                            </div>
+
+                            <div class = "row">
+                                <div class="col-lg-8">
+                                    <label>Przydziel pracownika</label>
+                                    <select multiple="multiple" class="form-control" name="employeeId">
+
+                                        <option th:each="employee : ${employees}" 
+                                                th:value="${employee.id}"
+                                                th:text="${employee.firstName} + ' ' + ${employee.lastName}">.
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class = "row">
+                                <div class="col-lg-8 text-center">
+                                    <input type="submit" class="btn btn-success" value="Dodaj zadanie" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+            </div>
+
+        </form>
+
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+    </head>
+    <body>
+
+
+        <nav th:fragment="navigation" class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="href=@{/tasks}">WebSiteName</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a th:attr="href=@{/admin}">Panel Administracyjny</a> </li>
+                    <li><a th:attr="href=@{/notifications}">Powiadomienia</a></li>
+                    <li><a th:attr="href=@{/main}">Moje Zadania</a></li>
+                    <li><a th:attr="href=@{/tasks}">Zadania</a></li>
+                    <li><a th:attr="href=@{/profiles}">Profile pracowników</a></li>
+                    <li><a th:attr="href=@{/myProfile}">Mój profil</a></li>
+
+                </ul>
+                <button type="submit" class="btn btn-basic navbar-btn"> Wyloguj </button> 
+            </div>
+        </nav>
+
+    </body>
+</html>
